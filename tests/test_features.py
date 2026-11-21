@@ -57,3 +57,27 @@ def test_winsorised_update_limits_outlier_influence():
     mu0 = st["mu"][0]
     F.update_state(st, [200, 97, 16, 120, 36.8])
     assert abs(st["mu"][0] - mu0) < 1.0
+
+
+def test_window_features_shape_and_ranges():
+    st = F.new_state("adaptive")
+    f = None
+    for k in range(20):
+        f = F.process_event(st, [80 + k, 97, 16, 120, 36.8])
+    assert len(f) == C.NF == 15
+    assert all(m >= 0 for m in f[2 * C.NV:])          # max |z| is non-negative
+
+
+def test_window_length_is_bounded():
+    st = F.new_state("adaptive")
+    for _ in range(100):
+        F.update_state(st, [80, 97, 16, 120, 36.8])
+    assert len(st["buf"]) == C.WINDOW
+
+
+def test_current_z_uses_state_before_update():
+    st = F.new_state("adaptive")
+    for _ in range(100):
+        F.update_state(st, [80, 97, 16, 120, 36.8])
+    z = F.update_state(st, [140, 97, 16, 120, 36.8])[0]
+    assert z > 5            # the outlier is judged against the old baseline
