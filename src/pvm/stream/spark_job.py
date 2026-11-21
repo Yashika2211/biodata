@@ -25,11 +25,21 @@ IN_DDL = ("pid string, site string, seq long, ts long, producer_ts_ms long, "
           "hr double, spo2 double, rr double, sbp double, temp double")
 
 
+_MODEL_CACHE: dict = {}          # per Python worker process: parsed model, keyed by its JSON
+
+
+def _get_model(model_json: str) -> ML.Model:
+    m = _MODEL_CACHE.get(model_json)
+    if m is None:
+        m = _MODEL_CACHE[model_json] = ML.Model.from_json(model_json)
+    return m
+
+
 def make_update_fn(model_json: str, salt: str, emit_all: bool):
     import pandas as pd
 
     def update(key, pdf_iter, state):
-        model = ML.Model.from_json(model_json)           # cheap; per group per batch
+        model = _get_model(model_json)                   # parsed once per worker, not per group
         pid = key[0]
         st = F.state_from_json(state.get[0]) if state.exists else S.init_state(model)
         rows = []
