@@ -67,23 +67,19 @@ def build(spark, a):
         "append", GroupStateTimeout.NoTimeout)
     sink = alerts.select(fn.col("pid_hash").alias("key"),
                          fn.to_json(fn.struct(*alerts.columns)).alias("value"))
-    q = (sink.writeStream.format("kafka")
+    w = (sink.writeStream.format("kafka")
          .option("kafka.bootstrap.servers", a.central_bootstrap)
          .option("topic", a.alerts_topic)
-         .option("checkpointLocation", a.checkpoint)
-         .trigger(processingTime=a.trigger) if a.trigger != "once" else
-         sink.writeStream.format("kafka")
-         .option("kafka.bootstrap.servers", a.central_bootstrap)
-         .option("topic", a.alerts_topic)
-         .option("checkpointLocation", a.checkpoint).trigger(availableNow=True))
+         .option("checkpointLocation", a.checkpoint))
+    q = w.trigger(availableNow=True) if a.trigger == "once" else w.trigger(processingTime=a.trigger)
     return q.start()
 
 
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--model", default="models/model.json")
-    ap.add_argument("--site-bootstrap", default="localhost:9092")
-    ap.add_argument("--central-bootstrap", default="localhost:9093")
+    ap.add_argument("--site-bootstrap", default="127.0.0.1:9092")
+    ap.add_argument("--central-bootstrap", default="127.0.0.1:9093")
     ap.add_argument("--alerts-topic", default="alerts.central")
     ap.add_argument("--checkpoint", default="/tmp/pvm-checkpoint")
     ap.add_argument("--trigger", default="1 second", help="micro-batch interval or 'once'")

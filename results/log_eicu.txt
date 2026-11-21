@@ -1,0 +1,5 @@
+[eicu] seed 0 main done in 57s
+[eicu] seed 1 main done in 60s
+[eicu] seed 2 main done in 58s
+[eicu] seed 3 main done in 56s
+[eicu] seed 4 main done in 55s

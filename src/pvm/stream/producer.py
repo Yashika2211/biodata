@@ -54,7 +54,7 @@ def main():
     from ..experiments import Provider
     ap = argparse.ArgumentParser()
     ap.add_argument("--dataset", default="synthetic", choices=["synthetic", "eicu"])
-    ap.add_argument("--bootstrap", default="localhost:9092")
+    ap.add_argument("--bootstrap", default="127.0.0.1:9092")
     ap.add_argument("--rate", type=float, default=200.0, help="events/s (0 = as fast as possible)")
     ap.add_argument("--events", type=int, default=20000)
     ap.add_argument("--patients", type=int, default=100)

@@ -23,7 +23,7 @@ def percentiles(lat_ms):
                 p99=float(np.percentile(a, 99)), mean=float(a.mean()), max=float(a.max()))
 
 
-def consume(bootstrap="localhost:9093", topic="alerts.central", expect=None,
+def consume(bootstrap="127.0.0.1:9093", topic="alerts.central", expect=None,
             idle_timeout=15.0, since_ms=0, max_seconds=300.0):
     from kafka import KafkaConsumer
     c = KafkaConsumer(topic, bootstrap_servers=bootstrap, auto_offset_reset="latest",
@@ -59,7 +59,7 @@ def consume(bootstrap="localhost:9093", topic="alerts.central", expect=None,
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--bootstrap", default="localhost:9093")
+    ap.add_argument("--bootstrap", default="127.0.0.1:9093")
     ap.add_argument("--expect", type=int, default=None)
     ap.add_argument("--idle", type=float, default=15.0)
     a = ap.parse_args()

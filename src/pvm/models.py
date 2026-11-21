@@ -9,7 +9,6 @@ import json
 from dataclasses import dataclass, field
 
 import numpy as np
-from scipy.optimize import minimize
 
 from . import config as C
 
@@ -64,6 +63,7 @@ def objective(theta, Xa, y, cw, l2=L2):
 
 
 def fit_central(Xa, y, cw, l2=L2):
+    from scipy.optimize import minimize        # lazy: serving needs no scipy
     d = Xa.shape[1]
     n = len(y)
 

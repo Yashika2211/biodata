@@ -17,7 +17,6 @@ from __future__ import annotations
 import math
 
 import numpy as np
-from sklearn.metrics import average_precision_score, roc_auc_score
 
 ZERO_COUNTS = dict(alarms=0, tp_alarms=0, episodes=0, detected=0, days=0.0)
 REFIRE_MIN = 60.0
@@ -94,6 +93,7 @@ def evaluate_alarms(patients, scores, tau, m, which="test", tol_min=30.0):
 
 
 def sample_metrics(patients, scores, which="test"):
+    from sklearn.metrics import average_precision_score, roc_auc_score   # lazy: serving needs no sklearn
     ys, ss = [], []
     for p in patients:
         lo, hi = (p.split, p.T) if which == "test" else (0, p.split)
