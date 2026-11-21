@@ -16,7 +16,7 @@ def add(dk, ctx):
                  "no attack evaluation beyond one simple membership inference check. Labels are injected, so absolute accuracy is not clinical. "
                  "The model is a simple linear model. Thresholds are tuned on labelled data.")
     dk.bullets(s, ["**Record-level DP**, not patient-level",
-                   "**FL simulated** in-process, not run over Kafka",
+                   "**FL simulated** in-process (a Kafka-topic demo reproduces it)",
                    "Only a simple membership-inference check (no stronger attacks)",
                    "**Semi-synthetic labels**: injected episodes, not clinical truth",
                    "Simple linear model; thresholds tuned on labelled data",

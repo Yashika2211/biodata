@@ -123,6 +123,14 @@ def add(doc, ctx):
             f"{DS_NAME[ds]}: centralised L-BFGS {a['mean']:.2f}s, FedAvg ({H[ds]['rounds_used']} rounds, 4 sites simulated "
             f"sequentially) {b['mean']:.1f}s" for ds, a, b in tr) +
             ". Federated training is slower in CPU terms because it iterates; its benefit is not compute but that raw rows stay put.")
+    fk = S.get("fl_over_kafka")
+    if fk:
+        doc.p(f"**Federated communication over Kafka.** Running {fk['rounds']} FedAvg rounds with {fk['sites']} sites through "
+              f"`fl.updates` / `fl.global` topics moved {fk['bytes_up_measured']/1e3:.0f} kB of site updates and "
+              f"{fk['bytes_down_measured']/1e3:.0f} kB of global models (JSON-encoded; {fk['parameters']} parameters per message), "
+              f"versus {fk['bytes_analytic_float64']/1e3:.0f} kB for the analytic float64 estimate used in the cost scenario, "
+              f"and gave the same model as the in-process simulation (max |Δθ| = {fk['max_abs_diff_vs_in_process']:.1e}). "
+              "Either way it is negligible next to raw streaming.")
     doc.h("4.5  Ablations", 2)
     for ds in D:
         doc.figure(f"figures/fig_ablations_{ds}.png", f"Ablations — {DS_NAME[ds]}: adaptation rate α, persistence m, DP clip, "
