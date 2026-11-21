@@ -1,9 +1,0 @@
-[synthetic] seed 0 main done in 20s
-[synthetic] seed 1 main done in 19s
-[synthetic] seed 2 main done in 21s
-[synthetic] seed 3 main done in 20s
-[synthetic] seed 4 main done in 22s
-[synthetic] seed 0 ablations done
-[synthetic] seed 1 ablations done
-[synthetic] seed 2 ablations done
-saved synthetic 562s

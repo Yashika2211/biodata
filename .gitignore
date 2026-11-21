@@ -15,3 +15,5 @@ dist/
 *.egg-info/
 build/
 .venv-spark/
+results/log_*.txt
+results/*_v1_*.json
