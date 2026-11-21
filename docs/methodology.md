@@ -12,3 +12,8 @@ rate *= 0.1 if |z| > 2.5                 # learn slowly while abnormal
 ```
 
 NaN (missing or implausible) means *no evidence*: no state update, zero contribution to the model.
+
+## Features and model
+15 features: for each vital the current z, the mean z over the last 6 samples, and the max |z| over those samples.
+Model: class-weighted L2 logistic regression on standardised features. Class weights and standardiser use aggregate
+counts/moments only, so every statistic is federatable.
