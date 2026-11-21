@@ -134,7 +134,7 @@ def build(results_dir="results"):
     if lat.get("inprocess"):
         cpu_in = lat["inprocess"]["cpu_seconds_per_million_events"]
         kruns = (lat.get("kafka") or {}).get("runs", [])
-        cpu_sp = [r["cpu_seconds_per_million_events"] for r in kruns if r["target_rate"] == 0 and r.get("received")]
+        cpu_sp = [r["cpu_seconds_per_million_events"] for r in kruns if r["target_rate"] == 0 and r.get("cpu_seconds_per_million_events")]
         avg_ev = float(np.mean([r["avg_event_bytes"] for r in kruns])) if kruns else 146.0
         avg_alert = 118.0
         for ds, s in out["datasets"].items():

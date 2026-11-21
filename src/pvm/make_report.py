@@ -346,12 +346,12 @@ def build(summary_path="results/summary.json", out="dist/report/report.docx"):
             rows.append([r["trigger"], "max" if r["target_rate"] == 0 else f"{r['target_rate']:g}",
                          f"{r['received']:,}", f"{l['p50']:.0f}", f"{l['p95']:.0f}", f"{l['p99']:.0f}",
                          f"{r['throughput_eps']:,.0f}" if r.get("throughput_eps") else "n/a",
-                         f"{r['cpu_seconds_per_million_events']:.0f}"])
+                         f"{r['cpu_seconds_per_million_events']:.0f}" if r.get("cpu_seconds_per_million_events") else "–"])
         doc.table(["Trigger", "Target events/s", "Events", "p50 (ms)", "p95 (ms)", "p99 (ms)", "Throughput (ev/s)",
                    "CPU-s / 1M ev"], rows,
                   "Real end-to-end Kafka → Spark → Kafka latency measured by the alert consumer (producer timestamp to "
                   "consumer receipt; Spark local[2]; one broker per cluster in Docker on a laptop; synthetic replay). "
-                  "The \"max\" rows are backlog bursts, so their latency reflects queueing, not steady state.",
+                  "The \"max\" rows are backlog bursts (producer unthrottled), so their latency reflects queueing, and CPU-s per million events is reported only there (saturated).",
                   widths=[2.6, 2.0, 1.5, 1.5, 1.5, 1.5, 2.4, 2.0], size=8)
         doc.figure("figures/fig_latency.png", "End-to-end latency by trigger interval and event rate; maximum throughput.", 16.0)
         doc.p("Latency is dominated by the micro-batch trigger interval (a micro-batch engine waits for the trigger), "

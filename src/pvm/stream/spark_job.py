@@ -86,6 +86,7 @@ def main():
     ap.add_argument("--max-offsets", type=int, default=200000)
     ap.add_argument("--starting-offsets", default="latest")
     ap.add_argument("--emit-all", action="store_true")
+    ap.add_argument("--progress", action="store_true", help="print per-batch progress lines")
     ap.add_argument("--cores", default="2")
     ap.add_argument("--shuffle-partitions", default="4")
     a = ap.parse_args()
@@ -100,6 +101,16 @@ def main():
     spark.sparkContext.setLogLevel("WARN")
     q = build(spark, a)
     print("STREAM STARTED", flush=True)
+    if a.progress:
+        import time
+        last = -1
+        while q.isActive:
+            pr = q.lastProgress
+            if pr and pr["batchId"] != last:
+                last = pr["batchId"]
+                print("PROGRESS batch=%d rows=%d trigger_ms=%s" % (
+                    last, pr["numInputRows"], pr.get("durationMs", {}).get("triggerExecution")), flush=True)
+            time.sleep(0.3)
     q.awaitTermination()
 
 

@@ -19,20 +19,26 @@ from . import consumer as CONS
 from . import producer as PROD
 
 
-def _cpu_seconds(proc):
+def _cpu_snapshot(proc):
+    """{pid: cpu_seconds} for the Spark launcher and every descendant (JVM, Python workers)."""
     import psutil
+    snap = {}
     try:
         p = psutil.Process(proc.pid)
-        tot = 0.0
         for q in [p] + p.children(recursive=True):
             try:
                 t = q.cpu_times()
-                tot += t.user + t.system
+                snap[q.pid] = t.user + t.system
             except psutil.Error:
                 pass
-        return tot
     except psutil.Error:
-        return float("nan")
+        pass
+    return snap
+
+
+def _cpu_delta(before, after):
+    """CPU used between snapshots: pids present in both count their delta, new pids their total."""
+    return sum(v - before.get(pid, 0.0) for pid, v in after.items())
 
 
 def start_spark(trigger, cores, ckpt, log_path, model="models/model.json"):
@@ -67,7 +73,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--triggers", nargs="+", default=["500 milliseconds", "1 second", "5 seconds"])
     ap.add_argument("--rates", nargs="+", type=float, default=[50, 500, 2000])
-    ap.add_argument("--seconds", type=float, default=10.0, help="duration of each paced run")
+    ap.add_argument("--seconds", type=float, default=30.0, help="duration of each paced run")
     ap.add_argument("--max-events", type=int, default=40000)
     ap.add_argument("--cores", type=int, default=2)
     ap.add_argument("--out", default="results/bench_kafka.json")
@@ -80,9 +86,9 @@ def main():
         time.sleep(10)
         for rate in list(a.rates) + [0]:
             events = a.max_events if rate == 0 else int(rate * a.seconds)
-            cpu0 = _cpu_seconds(proc)
+            cpu0 = _cpu_snapshot(proc)
             prod, cons = run_one(ps, rate, events)
-            cpu = _cpu_seconds(proc) - cpu0
+            cpu = _cpu_delta(cpu0, _cpu_snapshot(proc))
             row = dict(trigger=trig, target_rate=rate, cores=a.cores, events=events,
                        producer_rate=prod["rate"], avg_event_bytes=prod["avg_bytes"],
                        received=cons.get("n", 0), latency_ms={k: cons.get(k) for k in
@@ -90,7 +96,8 @@ def main():
                        throughput_eps=cons.get("throughput_eps"),
                        privacy_violations=cons.get("privacy_violations"),
                        spark_cpu_seconds=cpu,
-                       cpu_seconds_per_million_events=cpu / max(cons.get("n", 1), 1) * 1e6)
+                       # CPU per event is only meaningful when saturated (idle JVM time dominates otherwise)
+                       cpu_seconds_per_million_events=(cpu / max(cons.get("n", 1), 1) * 1e6 if rate == 0 else None))
             print(json.dumps(row), flush=True)
             results.append(row)
             time.sleep(8)
