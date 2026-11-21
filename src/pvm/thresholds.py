@@ -37,7 +37,7 @@ def choose_threshold(site_rows, grid):
         for rows in site_rows:
             tot = M.add_counts(tot, rows[i])
         f1 = M.summarise(tot, [])["f1"]
-        if f1 > best_f1:
+        if f1 >= best_f1 - 1e-12:   # ties -> higher (more conservative) threshold
             best, best_f1 = float(tau), f1
     return best, best_f1
 
