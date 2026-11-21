@@ -10,3 +10,24 @@ def test_phenotype_baselines_are_distinct():
     athl = SY.make_patient("b", "s", "athlete", 3.0, rng)
     assert np.nanmedian(copd.X[:, 1]) < 93 < np.nanmedian(athl.X[:, 1])
     assert np.nanmedian(athl.X[:, 0]) < np.nanmedian(copd.X[:, 0])
+
+
+def test_missing_values_present_but_not_dominant():
+    p = SY.make_patient("a", "s", "normal", 4.0, np.random.default_rng(1))
+    frac = np.isnan(p.X).mean()
+    assert 0.005 < frac < 0.25
+
+
+def test_artefact_runs_have_realistic_lengths():
+    rng = np.random.default_rng(2)
+    lens = []
+    for _ in range(30):
+        mask, _ = SY._artefacts(1152, rng, 5.0, rate_per_day=6.0)
+        run = 0
+        for v in np.r_[mask, False]:
+            if v:
+                run += 1
+            elif run:
+                lens.append(run); run = 0
+    assert max(lens) <= 8 * 3            # overlapping artefacts can merge, but stay short
+    assert np.mean(np.array(lens) >= 3) > 0.3   # many survive a 3-sample persistence filter
