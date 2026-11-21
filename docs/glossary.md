@@ -6,3 +6,4 @@
 * **DP-SGD** SGD with per-record clipping and Gaussian noise.
 * **RDP** Renyi differential privacy accountant.
 * **Alarm event** persistence-satisfying firing that re-fires hourly while it persists.
+* **Episode** injected labelled deterioration (sepsis-like, hypoxia, shock, brady).
