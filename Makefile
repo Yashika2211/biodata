@@ -43,3 +43,5 @@ bench-kafka:
 
 local-demo:
 	$(PY) examples/local_runner_demo.py
+
+all: test experiments figures docs dist
