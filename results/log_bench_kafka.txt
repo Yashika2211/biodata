@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/Users/yashika2209/Desktop/big data/src/pvm/stream/bench_kafka.py", line 109, in <module>
+    main()
+  File "/Users/yashika2209/Desktop/big data/src/pvm/stream/bench_kafka.py", line 83, in main
+    cpu0 = _cpu_seconds(proc)
+           ^^^^^^^^^^^^^^^^^^
+  File "/Users/yashika2209/Desktop/big data/src/pvm/stream/bench_kafka.py", line 23, in _cpu_seconds
+    import psutil
+ModuleNotFoundError: No module named 'psutil'

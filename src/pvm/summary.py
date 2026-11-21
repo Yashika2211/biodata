@@ -55,8 +55,8 @@ def method_table(runs, keys):
         rows = [r[k] for r in runs if k in r]
         if not rows:
             continue
-        out[k] = {m: ms([r.get(m) for r in rows]) for m in METRICS}
-        for extra in ("tau", "epsilon", "rounds_to_converge", "loss_gap", "train_seconds", "bytes_exchanged"):
+        out[k] = {m: ms([r.get(m) for r in rows]) for m in METRICS + ["alarms"]}
+        for extra in ("alarms", "tau", "epsilon", "rounds_to_converge", "loss_gap", "train_seconds", "bytes_exchanged"):
             if any(extra in r for r in rows):
                 out[k][extra] = ms([r.get(extra) for r in rows])
     return out
@@ -139,7 +139,8 @@ def build(results_dir="results"):
         avg_alert = 118.0
         for ds, s in out["datasets"].items():
             m = s["methods"]["F"]
-            alarms_day = m["fa_per_day"]["mean"] + m["recall"]["mean"] * s["cohort"]["test_episodes"]["mean"] / s["cohort"]["days"]["mean"] * 0.4
+            # alarms (false + detected) per patient-day on the held-out 40 % of each series
+            alarms_day = m["alarms"]["mean"] / (0.4 * s["cohort"]["days"]["mean"])
             cost[ds] = CO.scenario_costs(avg_ev, avg_alert, alarms_day, cpu_in)
             if cpu_sp:
                 cost[ds]["spark_cpu_s_per_million_events"] = float(np.mean(cpu_sp))
