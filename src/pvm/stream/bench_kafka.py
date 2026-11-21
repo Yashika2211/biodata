@@ -82,8 +82,10 @@ def main():
     results = []
     for trig in a.triggers:
         proc = start_spark(trig, a.cores, "/tmp/pvm-bench-ck", "/tmp/pvm-bench-spark.log")
-        PROD.run(ps, "127.0.0.1:9092", 100, 300)          # warm-up (not recorded)
-        time.sleep(10)
+        # Warm-up (not recorded): touch every patient key so Python workers, JIT and state
+        # stores are initialised; the first measured batches would otherwise be seconds slower.
+        PROD.run(ps, "127.0.0.1:9092", 500, 6000)
+        time.sleep(20)
         for rate in list(a.rates) + [0]:
             events = a.max_events if rate == 0 else int(rate * a.seconds)
             cpu0 = _cpu_snapshot(proc)
