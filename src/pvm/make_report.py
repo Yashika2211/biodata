@@ -131,10 +131,10 @@ class Doc:
 
 def accuracy_rows(d):
     rows = []
-    keys = ["A", "A2", "B", "C", "D", "E", "F"] + [f"G@{s:g}" for s in sorted(r["sigma"] for r in d["privacy_utility"])]
+    keys = ["A", "A2", "B", "C", "D", "E", "F"] + [r["key"] for r in sorted(d["privacy_utility"], key=lambda r: r["sigma"])]
     for k in keys:
         m = d["methods"][k]
-        name = METHOD_NAME.get(k) or f"G  FL + DP, σ={k[2:]} (ε={eps_str(m['epsilon']['mean'])})"
+        name = METHOD_NAME.get(k) or f"G  FL + DP, σ={float(k[2:]):g} (ε={eps_str(m['epsilon']['mean'])})"
         rows.append([name, pm(m["precision"]), pm(m["recall"]), pm(m["f1"]), pm(m["fa_per_day"]),
                      pm(m["delay_min"], 0), pm(m["auroc"]), pm(m["auprc"])])
     return rows
