@@ -15,12 +15,19 @@ from .. import config as C
 from ..serving import event_json
 
 
+def _patient_events(p, region):
+    lo = p.split if region == "test" else 0
+    for k in range(lo, p.T):
+        yield (p.pid, p.site, k, p.X[k])
+
+
 def build_events(patients, n_events=None, region="test"):
-    """Round-robin interleave patients in time order: yields (pid, site, seq, x)."""
-    iters = []
-    for p in patients:
-        lo = p.split if region == "test" else 0
-        iters.append(((p.pid, p.site, k, p.X[k]) for k in range(lo, p.T)))
+    """Round-robin interleave patients in time order: yields (pid, site, seq, x).
+
+    (One generator function per patient: a generator *expression* inside the loop would
+    late-bind ``p`` and replay only the last patient.)
+    """
+    iters = [_patient_events(p, region) for p in patients]
     out = (e for group in itertools.zip_longest(*iters) for e in group if e is not None)
     return itertools.islice(out, n_events) if n_events else out
 

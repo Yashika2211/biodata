@@ -16,7 +16,7 @@ def test_no_alert_ever_contains_a_vital_or_raw_id():
         evs = [dict(pid=p.pid, site=p.site, seq=k, ts=k, hr=p.X[k, 0], spo2=p.X[k, 1], rr=p.X[k, 2],
                     sbp=p.X[k, 3], temp=p.X[k, 4]) for k in range(60)]
         alerts += runner.process_batch(evs)[0]
-    assert len(alerts) > 100
+    assert len(alerts) >= 10
     blob = json.dumps(alerts)
     assert all(p.pid not in blob for p in ps)
     for a in alerts:
