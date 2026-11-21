@@ -60,3 +60,13 @@ def test_episode_outside_range_is_ignored():
     s = np.zeros(100)
     c, _ = M.patient_counts(s, [(10, 20, "x"), (60, 70, "x")], 50, 100, 5.0, 0.5, 3)
     assert c["episodes"] == 1          # only the episode inside [50, 100)
+
+
+def test_sample_metrics_perfect_and_random():
+    from pvm.cohort import Patient
+    T = 200
+    y = (np.arange(T) % 10 == 0).astype(np.int8)
+    p = Patient("p", "s", np.zeros((T, 5)), y, -np.ones(T, dtype=np.int32))
+    perfect = {"p": y.astype(float)}
+    r = M.sample_metrics([p], perfect, which="train")
+    assert r["auroc"] == 1.0
