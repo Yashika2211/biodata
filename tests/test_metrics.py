@@ -49,3 +49,8 @@ def test_always_on_alarm_cannot_game_recall_or_precision():
     c, d = M.patient_counts(s, [(100, 120, "x")], 0, 288, 5.0, 0.5, 3)
     assert c["detected"] == 1 and c["alarms"] > 10      # many false alarms too
     assert c["tp_alarms"] == 1
+
+
+def test_delay_is_median_over_detected_episodes():
+    out = M.summarise(dict(alarms=3, tp_alarms=3, episodes=4, detected=3, days=1.0), [5.0, 50.0, 500.0])
+    assert out["delay_min"] == 50.0 and out["recall"] == 0.75
