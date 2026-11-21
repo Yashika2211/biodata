@@ -38,7 +38,7 @@ def fig_architecture(path="docs/architecture.png"):
     box(2.55, 2.0, 1.9, 1.2, "kafka-site :9092\nvitals.raw.<site>\n(1 h retention)", "#fde9c8", bold=False)
     box(4.95, 2.0, 2.2, 1.2, "Spark Structured\nStreaming\nper-patient JSON state", "#d8f0e5")
     box(0.35, 0.55, 3.6, 0.95, "Local training\n(FedAvg / DP-SGD client)", "#e8e3f4")
-    box(4.75, 3.45, 2.6, 0.55, "shared code path: offline == serving", "#fff", fs=8.5)
+    box(4.45, 3.45, 3.2, 0.5, "shared code path: offline == serving", "#fff", fs=8.5)
     ax.add_patch(FancyBboxPatch((8.0, 0.35), 2.9, 4.0, boxstyle="round,pad=0.03,rounding_size=0.1",
                                 fc="#fdf1e8", ec="#d55e00", lw=1.6, ls="--"))
     ax.text(8.2, 4.1, "CENTRAL", fontsize=10.5, color="#d55e00", fontweight="bold")

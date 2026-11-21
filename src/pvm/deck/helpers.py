@@ -30,7 +30,7 @@ class Deck:
     def slide(self, title, notes, tag=None, number=True):
         s = self.prs.slides.add_slide(self.blank)
         if title:
-            self.text(s, title, 0.6, 0.35, 12.1, 0.9, size=32, bold=True, color=NAVY)
+            self.text(s, title, 0.6, 0.35, 7.4 if tag else 12.1, 0.9, size=28 if tag else 32, bold=True, color=NAVY)
             bar = s.shapes.add_shape(MSO_SHAPE.RECTANGLE, Inches(0.6), Inches(1.22), Inches(1.2), Inches(0.07))
             bar.fill.solid(); bar.fill.fore_color.rgb = BLUE; bar.line.fill.background()
         if tag:

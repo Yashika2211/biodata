@@ -8200,256 +8200,266 @@
      "trigger": "500 milliseconds",
      "target_rate": 50,
      "cores": 2,
-     "events": 500,
-     "producer_rate": 50.07666164503641,
-     "avg_event_bytes": 152.76,
-     "received": 503,
+     "events": 1000,
+     "producer_rate": 50.045358522038825,
+     "avg_event_bytes": 146.505,
+     "received": 1000,
      "latency_ms": {
-      "p50": 632.75,
-      "p95": 944.2809814453122,
-      "p99": 1211.931435546876,
-      "mean": 641.4248279852137,
-      "max": 1310.960693359375
+      "p50": 4236.5931396484375,
+      "p95": 6113.682763671874,
+      "p99": 6784.562431640625,
+      "mean": 4297.324923583984,
+      "max": 7129.64599609375
      },
-     "throughput_eps": 50.925172277245885,
+     "throughput_eps": 43.54361036928482,
      "privacy_violations": 0,
-     "spark_cpu_seconds": -23.905621668,
-     "cpu_seconds_per_million_events": -47526.086815109345
+     "spark_cpu_seconds": 13.098482736000001,
+     "cpu_seconds_per_million_events": null
     },
     {
      "trigger": "500 milliseconds",
-     "target_rate": 500,
+     "target_rate": 250,
      "cores": 2,
      "events": 5000,
-     "producer_rate": 500.02534517964966,
-     "avg_event_bytes": 147.536,
+     "producer_rate": 250.02880428271996,
+     "avg_event_bytes": 146.5414,
      "received": 5000,
      "latency_ms": {
-      "p50": 647.9320068359375,
-      "p95": 985.982568359375,
-      "p99": 1199.6208398437502,
-      "mean": 654.0315403808594,
-      "max": 1297.051025390625
+      "p50": 1380.9224853515625,
+      "p95": 2150.0428833007813,
+      "p99": 5305.087065429688,
+      "mean": 1506.0396264648436,
+      "max": 5620.079833984375
      },
-     "throughput_eps": 462.7270582398313,
+     "throughput_eps": 209.2938788642136,
      "privacy_violations": 0,
-     "spark_cpu_seconds": 0.0,
-     "cpu_seconds_per_million_events": 0.0
+     "spark_cpu_seconds": 24.454801492,
+     "cpu_seconds_per_million_events": null
     },
     {
      "trigger": "500 milliseconds",
-     "target_rate": 2000,
+     "target_rate": 1000,
      "cores": 2,
      "events": 20000,
-     "producer_rate": 1999.8620128473,
-     "avg_event_bytes": 147.032,
+     "producer_rate": 999.9699601614523,
+     "avg_event_bytes": 147.52905,
      "received": 20000,
      "latency_ms": {
-      "p50": 641.2540283203125,
-      "p95": 960.837158203125,
-      "p99": 1227.674072265625,
-      "mean": 649.7415231445312,
-      "max": 1326.674072265625
+      "p50": 932.81298828125,
+      "p95": 1412.6576171875,
+      "p99": 3757.6462255859333,
+      "mean": 1036.5151514160157,
+      "max": 5271.6689453125
      },
-     "throughput_eps": 1877.2413847120424,
+     "throughput_eps": 818.710988084334,
      "privacy_violations": 0,
-     "spark_cpu_seconds": 0.0,
-     "cpu_seconds_per_million_events": 0.0
+     "spark_cpu_seconds": 32.110422044,
+     "cpu_seconds_per_million_events": null
     },
     {
      "trigger": "500 milliseconds",
      "target_rate": 0,
      "cores": 2,
      "events": 40000,
-     "producer_rate": 18021.044725923493,
-     "avg_event_bytes": 146.661,
+     "producer_rate": 21779.704956756606,
+     "avg_event_bytes": 148.52485,
      "received": 40000,
      "latency_ms": {
-      "p50": 1624.1162109375,
-      "p95": 2179.132080078125,
-      "p99": 2205.530029296875,
-      "mean": 1667.23128850708,
-      "max": 2220.530029296875
+      "p50": 1813.5235595703125,
+      "p95": 6115.489013671875,
+      "p99": 6290.08984375,
+      "mean": 2418.0336237548827,
+      "max": 6339.489013671875
      },
-     "throughput_eps": 15481.039638499264,
+     "throughput_eps": 5874.254409608094,
      "privacy_violations": 0,
-     "spark_cpu_seconds": 0.0,
-     "cpu_seconds_per_million_events": 0.0
+     "spark_cpu_seconds": 5.658930328,
+     "cpu_seconds_per_million_events": 141.4732582
     },
     {
      "trigger": "1 second",
      "target_rate": 50,
      "cores": 2,
-     "events": 500,
-     "producer_rate": 50.08079928607198,
-     "avg_event_bytes": 152.76,
-     "received": 514,
+     "events": 1000,
+     "producer_rate": 50.037410214619996,
+     "avg_event_bytes": 146.505,
+     "received": 1000,
      "latency_ms": {
-      "p50": 697.6700439453125,
-      "p95": 1285.22353515625,
-      "p99": 1363.4512377929686,
-      "mean": 739.4886289366489,
-      "max": 1416.998046875
+      "p50": 4651.0634765625,
+      "p95": 6244.105432128907,
+      "p99": 6810.940895996094,
+      "mean": 4637.852217285156,
+      "max": 7151.02392578125
      },
-     "throughput_eps": 100.37454849728162,
+     "throughput_eps": 45.84299178841458,
      "privacy_violations": 0,
-     "spark_cpu_seconds": 15.094789423999998,
-     "cpu_seconds_per_million_events": 29367.294599221786
+     "spark_cpu_seconds": 12.084080032000001,
+     "cpu_seconds_per_million_events": null
     },
     {
      "trigger": "1 second",
-     "target_rate": 500,
+     "target_rate": 250,
      "cores": 2,
      "events": 5000,
-     "producer_rate": 500.006115511352,
-     "avg_event_bytes": 147.536,
-     "received": 5162,
+     "producer_rate": 250.03277791093214,
+     "avg_event_bytes": 146.5414,
+     "received": 5000,
      "latency_ms": {
-      "p50": 748.7574462890625,
-      "p95": 1317.6408569335936,
-      "p99": 1413.895495605469,
-      "mean": 780.0763332480749,
-      "max": 1470.26025390625
+      "p50": 1502.20751953125,
+      "p95": 2462.0243652343756,
+      "p99": 5256.502678222657,
+      "mean": 1661.0034870117188,
+      "max": 5582.943115234375
      },
-     "throughput_eps": 1009.3392092040037,
+     "throughput_eps": 212.6341135300727,
      "privacy_violations": 0,
-     "spark_cpu_seconds": 15.238600087999998,
-     "cpu_seconds_per_million_events": 2952.072857032158
+     "spark_cpu_seconds": 23.474199999999996,
+     "cpu_seconds_per_million_events": null
     },
     {
      "trigger": "1 second",
-     "target_rate": 2000,
+     "target_rate": 1000,
      "cores": 2,
      "events": 20000,
-     "producer_rate": 1999.7872102184485,
-     "avg_event_bytes": 147.032,
-     "received": 20041,
+     "producer_rate": 999.9865891347793,
+     "avg_event_bytes": 147.52905,
+     "received": 20000,
      "latency_ms": {
-      "p50": 837.421142578125,
-      "p95": 1340.0419921875,
-      "p99": 1416.1681640624997,
-      "mean": 845.5529861903216,
-      "max": 1464.3251953125
+      "p50": 1053.962890625,
+      "p95": 1597.2734619140624,
+      "p99": 5300.070351562497,
+      "mean": 1119.0342406860352,
+      "max": 5620.052001953125
      },
-     "throughput_eps": 3853.82868686928,
+     "throughput_eps": 827.5115045405712,
      "privacy_violations": 0,
-     "spark_cpu_seconds": 15.436821456000011,
-     "cpu_seconds_per_million_events": 770.2620356269654
+     "spark_cpu_seconds": 24.683191987999997,
+     "cpu_seconds_per_million_events": null
     },
     {
      "trigger": "1 second",
      "target_rate": 0,
      "cores": 2,
      "events": 40000,
-     "producer_rate": 15550.24996216065,
-     "avg_event_bytes": 146.661,
-     "received": 40445,
+     "producer_rate": 22952.231599358816,
+     "avg_event_bytes": 148.52485,
+     "received": 40000,
      "latency_ms": {
-      "p50": 2420.934814453125,
-      "p95": 2759.31494140625,
-      "p99": 2782.8779296875,
-      "mean": 2219.647021013539,
-      "max": 2802.876953125
+      "p50": 1652.8634033203125,
+      "p95": 5917.518408203123,
+      "p99": 6039.322998046875,
+      "mean": 2736.3104054504392,
+      "max": 6143.8720703125
      },
-     "throughput_eps": 19892.033516073232,
+     "throughput_eps": 6128.081798848825,
      "privacy_violations": 0,
-     "spark_cpu_seconds": 3.739618243999999,
-     "cpu_seconds_per_million_events": 92.46181837062676
+     "spark_cpu_seconds": 6.060918520000008,
+     "cpu_seconds_per_million_events": 151.5229630000002
     },
     {
      "trigger": "5 seconds",
      "target_rate": 50,
      "cores": 2,
-     "events": 500,
-     "producer_rate": 50.07112592894666,
-     "avg_event_bytes": 152.76,
-     "received": 527,
+     "events": 1000,
+     "producer_rate": 50.0456361882713,
+     "avg_event_bytes": 146.505,
+     "received": 1000,
      "latency_ms": {
-      "p50": 691.431884765625,
-      "p95": 4915.307958984375,
-      "p99": 5334.447958984375,
-      "mean": 1513.2302774215784,
-      "max": 5434.046142578125
+      "p50": 5065.9215087890625,
+      "p95": 7987.353735351562,
+      "p99": 8810.142846679688,
+      "mean": 5140.533541748046,
+      "max": 9065.491943359375
      },
-     "throughput_eps": 84.51107386921518,
+     "throughput_eps": 46.5959120771983,
      "privacy_violations": 0,
-     "spark_cpu_seconds": 3.9929135000000002,
-     "cpu_seconds_per_million_events": 7576.68595825427
+     "spark_cpu_seconds": 9.696730791999999,
+     "cpu_seconds_per_million_events": null
     },
     {
      "trigger": "5 seconds",
-     "target_rate": 500,
+     "target_rate": 250,
      "cores": 2,
      "events": 5000,
-     "producer_rate": 500.0002980234015,
-     "avg_event_bytes": 147.536,
-     "received": 5078,
+     "producer_rate": 250.02719161592856,
+     "avg_event_bytes": 146.5414,
+     "received": 5000,
      "latency_ms": {
-      "p50": 909.5166015625,
-      "p95": 5119.827001953125,
-      "p99": 5516.033242187499,
-      "mean": 1844.611223891665,
-      "max": 5620.697021484375
+      "p50": 4037.6739501953125,
+      "p95": 7548.807604980469,
+      "p99": 8351.553154296875,
+      "mean": 4045.389576904297,
+      "max": 8663.385009765625
      },
-     "throughput_eps": 913.6633426843082,
+     "throughput_eps": 241.7417739000561,
      "privacy_violations": 0,
-     "spark_cpu_seconds": 4.086469991999994,
-     "cpu_seconds_per_million_events": 804.7400535643943
+     "spark_cpu_seconds": 8.677239527999996,
+     "cpu_seconds_per_million_events": null
     },
     {
      "trigger": "5 seconds",
-     "target_rate": 2000,
+     "target_rate": 1000,
      "cores": 2,
      "events": 20000,
-     "producer_rate": 1999.5191300043023,
-     "avg_event_bytes": 147.032,
-     "received": 20245,
+     "producer_rate": 999.9405538613545,
+     "avg_event_bytes": 147.52905,
+     "received": 20000,
      "latency_ms": {
-      "p50": 982.56103515625,
-      "p95": 4536.800976562499,
-      "p99": 4914.68603515625,
-      "mean": 1664.24107407645,
-      "max": 5006.714111328125
+      "p50": 3203.6634521484375,
+      "p95": 8572.366052246094,
+      "p99": 9372.121247558593,
+      "mean": 3667.7751736083983,
+      "max": 9705.118896484375
      },
-     "throughput_eps": 3485.5400482913733,
+     "throughput_eps": 826.0808257168566,
      "privacy_violations": 0,
-     "spark_cpu_seconds": 6.165654084000003,
-     "cpu_seconds_per_million_events": 304.5519428994815
+     "spark_cpu_seconds": 9.492011432000004,
+     "cpu_seconds_per_million_events": null
     },
     {
      "trigger": "5 seconds",
      "target_rate": 0,
      "cores": 2,
      "events": 40000,
-     "producer_rate": 17492.164493250377,
-     "avg_event_bytes": 146.661,
+     "producer_rate": 25479.720138257253,
+     "avg_event_bytes": 148.52485,
      "received": 40000,
      "latency_ms": {
-      "p50": 1767.32421875,
-      "p95": 2413.2841796875,
-      "p99": 2502.286865234375,
-      "mean": 1714.4860014709473,
-      "max": 2517.286865234375
+      "p50": 5462.781982421875,
+      "p95": 6283.646398925781,
+      "p99": 6446.208984375,
+      "mean": 5449.548063037109,
+      "max": 6503.321044921875
      },
-     "throughput_eps": 13450.614144874005,
+     "throughput_eps": 64116.520348717226,
      "privacy_violations": 0,
-     "spark_cpu_seconds": 0.8205106000000129,
-     "cpu_seconds_per_million_events": 20.51276500000032
+     "spark_cpu_seconds": 3.874497147999998,
+     "cpu_seconds_per_million_events": 96.86242869999995
     }
    ],
    "spark": "PySpark 3.5.3 local[2], Kafka apache/kafka 3.8.0 (Docker, 1 broker per cluster)"
   }
  },
+ "fl_over_kafka": {
+  "rounds": 100,
+  "sites": 4,
+  "parameters": 16,
+  "bytes_up_measured": 149378,
+  "bytes_down_measured": 144324,
+  "bytes_analytic_float64": 102400,
+  "seconds": 2.5018959045410156,
+  "max_abs_diff_vs_in_process": 0.0
+ },
  "cost": {
   "synthetic": {
    "events": 8640000.0,
-   "raw_stream_bytes": 1283016240.0,
+   "raw_stream_bytes": 1272456648.0000005,
    "federated_bytes": 2296410.0,
    "alert_bytes": 2168250.0,
    "model_update_bytes": 102400.0,
    "count_table_bytes": 25760,
-   "reduction_factor": 558.7052137902203,
-   "egress_usd_raw": 0.11547146159999999,
+   "reduction_factor": 554.1069094804501,
+   "egress_usd_raw": 0.11452109832000004,
    "egress_usd_federated": 0.0002066769,
    "scoring_cpu_hours": 0.036272688000000004,
    "scoring_usd": 0.0014509075200000003,
@@ -8466,18 +8476,18 @@
     "vcpu_usd_per_hour": 0.04,
     "storage_usd_per_gb_month": 0.023
    },
-   "spark_cpu_s_per_million_events": 56.48729168531354,
-   "scoring_usd_spark": 0.0054227800017901
+   "spark_cpu_s_per_million_events": 129.95288330000005,
+   "scoring_usd_spark": 0.012475476796800005
   },
   "eicu": {
    "events": 8640000.0,
-   "raw_stream_bytes": 1283016240.0,
+   "raw_stream_bytes": 1272456648.0000005,
    "federated_bytes": 2677521.911474516,
    "alert_bytes": 2549361.911474516,
    "model_update_bytes": 102400.0,
    "count_table_bytes": 25760,
-   "reduction_factor": 479.18048196044106,
-   "egress_usd_raw": 0.11547146159999999,
+   "reduction_factor": 475.2366890246124,
+   "egress_usd_raw": 0.11452109832000004,
    "egress_usd_federated": 0.00024097697203270645,
    "scoring_cpu_hours": 0.036272688000000004,
    "scoring_usd": 0.0014509075200000003,
@@ -8494,8 +8504,8 @@
     "vcpu_usd_per_hour": 0.04,
     "storage_usd_per_gb_month": 0.023
    },
-   "spark_cpu_s_per_million_events": 56.48729168531354,
-   "scoring_usd_spark": 0.0054227800017901
+   "spark_cpu_s_per_million_events": 129.95288330000005,
+   "scoring_usd_spark": 0.012475476796800005
   }
  },
  "prices": {

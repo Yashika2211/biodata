@@ -12,7 +12,7 @@ from .helpers import BLUE, GREEN, GREY, LIGHT, MSO_SHAPE, NAVY, ORANGE, PP_ALIGN
 def add(dk, ctx):
     S, D, H, first, syn = ctx.S, ctx.D, ctx.H, ctx.first, ctx.syn
     cost = S.get("cost") or {}
-    s = dk.slide("Only alerts and model updates leave the site",
+    s = dk.slide("Only alerts and updates leave the site",
                  "Bytes leaving the site per month for a scenario of 1000 patients, one sample per 5 minutes. Centralised raw streaming "
                  "versus alerts plus federated model updates plus threshold count tables. Bytes and CPU-seconds are measured; dollar "
                  "figures use the illustrative price table in the report: egress 9 cents per GB, 4 cents per vCPU-hour.",

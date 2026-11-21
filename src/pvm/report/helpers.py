@@ -69,6 +69,7 @@ class Doc:
         return para
 
     def _runs(self, para, text, bold=False, italic=False, size=None):
+        text = text.replace("`", "")
         parts = text.split("**")
         for i, t in enumerate(parts):
             if not t:
@@ -100,6 +101,7 @@ class Doc:
         t = self.d.add_table(rows=1, cols=len(header))
         t.style = "Table Grid"
         t.alignment = WD_TABLE_ALIGNMENT.CENTER
+        t.autofit = False
         for i, htxt in enumerate(header):
             c = t.rows[0].cells[i]
             c.text = ""

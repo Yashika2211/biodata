@@ -12,7 +12,7 @@ from .helpers import BLUE, GREEN, GREY, LIGHT, MSO_SHAPE, NAVY, ORANGE, PP_ALIGN
 def add(dk, ctx):
     S, D, H, first, syn = ctx.S, ctx.D, ctx.H, ctx.first, ctx.syn
     ex = "figures/fig_adaptive_synthetic.png"
-    s = dk.slide("Idea: judge each patient against their own baseline",
+    s = dk.slide("Each patient vs their own baseline",
                  "This is the example the whole study is about. This patient has a normal SpO2 of about 90 percent. The fixed 92 percent "
                  "threshold, orange dots, alarms essentially all the time. The adaptive baseline, blue, learns the patient's normal "
                  "and alarms only on the injected deterioration, shaded, and a few motion artefacts. Mechanism: per-patient EWMA mean "

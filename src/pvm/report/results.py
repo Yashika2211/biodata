@@ -102,7 +102,7 @@ def add(doc, ctx):
               "Latency is the wait for the next micro-batch plus the batch's own processing time (Spark scheduling, Python worker, "
               "state store, Kafka write); with 160 patient keys on local[2] one batch takes roughly a second, so the trigger only "
               "matters once it exceeds that. The job saturates near 800–1000 events/s on this setup. "
-              "**Unexplained anomaly:** the slowest p50 (4–5 s) occurred at the *lowest* rate (50 events/s) for the 0.5 s and 1 s triggers, "
+              "**Unexplained anomaly:** the slowest p50 (4–5 s) occurred at the lowest rate (50 events/s) for the 0.5 s and 1 s triggers, "
               "which we did not diagnose (we suspect small-batch/idle-partition effects in the Kafka source, untested). "
               "The \"max\" throughput figures come from the consumer's first-to-last-message span and are unreliable for the 5 s trigger "
               "(one large batch). For 5-minute vitals, even multi-second latency is clinically negligible.")

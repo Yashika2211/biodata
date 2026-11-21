@@ -11,7 +11,7 @@ from .helpers import BLUE, GREEN, GREY, LIGHT, MSO_SHAPE, NAVY, ORANGE, PP_ALIGN
 
 def add(dk, ctx):
     S, D, H, first, syn = ctx.S, ctx.D, ctx.H, ctx.first, ctx.syn
-    s = dk.slide("Privacy costs little until the noise gets large",
+    s = dk.slide("Privacy is cheap until noise is large",
                  "DP-SGD with per-record clipping, Gaussian noise and a Renyi accountant at delta 1e-5. Epsilon here is record-level, not "
                  "patient-level; one patient contributes hundreds of correlated rows, so patient-level protection is much weaker. "
                  "The green band is non-private FedAvg; the orange line is FedAvg with DP at five noise levels; the dashed line is the "

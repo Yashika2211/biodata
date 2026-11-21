@@ -20,7 +20,7 @@ def add(doc, ctx):
     doc.p("Per-patient adaptive thresholds reduce false alarms substantially compared with one fixed threshold, and a "
           "federated model trained on adaptive features matched the centralised model within our statistical resolution "
           "while raw data stayed local (" + "; ".join(c) + "). Record-level differential privacy was nearly free at moderate noise and "
-          "degraded accuracy only at large noise. The pipeline sustains the needed rates with latency dominated by the "
-          "trigger interval, and sending only alerts and model updates cuts the bytes leaving the site by orders of magnitude. "
+          "degraded accuracy only at large noise. The pipeline sustains the needed rates with end-to-end latency of about a second at 1000 events/s "
+          "(batch processing plus trigger wait), and sending only alerts and model updates cuts the bytes leaving the site by orders of magnitude. "
           "These conclusions hold for injected-label benchmarks and a simple model; prospective validation on real "
           "annotated alarms and a patient-level privacy analysis are the necessary next steps.")

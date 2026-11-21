@@ -18,5 +18,5 @@ def add(dk, ctx):
                  "is used by training, evaluation, a Kafka-free runner and the Spark job, and a unit test proves serving equals offline "
                  "exactly. Federated rounds are simulated in-process; that is a stated limitation.")
     dk.image(s, "docs/architecture.png", 0.6, 1.55, w=12.1)
-    dk.text(s, "Alerts carry no vitals  ·  one shared feature code path  ·  FL is simulated (not over Kafka)",
+    dk.text(s, "Alerts carry no vitals  ·  one shared feature code path  ·  FL experiments simulated (Kafka demo exists)",
             0.7, 6.75, 12, 0.5, size=16, color=GREY)

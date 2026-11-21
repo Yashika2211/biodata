@@ -13,7 +13,7 @@ def add(dk, ctx):
     S, D, H, first, syn = ctx.S, ctx.D, ctx.H, ctx.first, ctx.syn
     for ds in ([syn] + ([first] if first != syn else [])):
         h = H[ds]; d = D[ds]; n = 5 if ds == syn else 6
-        s = dk.slide(f"Accuracy: adaptive features beat fixed thresholds",
+        s = dk.slide(f"Adaptive beats fixed thresholds",
                      f"{DS_NAME[ds]}. Static thresholds A and A2 produce {h['fa_A']:.1f} and {h['fa_A2']:.1f} false alarms per patient-day. "
                      f"The adaptive threshold alone, method C, brings this to {h['fa_C']:.2f}. Machine learning on adaptive features, D, has F1 "
                      f"{h['f1']['D']:.2f}. Mean and standard deviation over {d['n_seeds']} seeds, last 40 percent of each series held out. "

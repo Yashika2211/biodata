@@ -12,7 +12,7 @@ from .helpers import BLUE, GREEN, GREY, LIGHT, MSO_SHAPE, NAVY, ORANGE, PP_ALIGN
 def add(dk, ctx):
     S, D, H, first, syn = ctx.S, ctx.D, ctx.H, ctx.first, ctx.syn
     lat = S["latency"]; k = lat.get("kafka"); ip = lat.get("inprocess")
-    s = dk.slide("Latency: about a second at 1000 events/s",
+    s = dk.slide("Latency: ~1 s at 1000 events/s",
                  "Real end-to-end latency measured by the alert consumer: producer timestamp to consumer receipt, through Kafka, Spark and "
                  "Kafka again, at three event rates and three trigger intervals. Benchmarks ran on one laptop, one broker per cluster, Spark "
                  "local mode with two cores. In-process, one event takes about "

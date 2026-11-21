@@ -35,15 +35,15 @@ def fig_latency(S):
         ax[0].scatter(xs, p99, marker="x", s=36, color="#222", zorder=3, label="p99" if i == 0 else None)
     ax[0].set_xticks(range(len(trig))); ax[0].set_xticklabels(["0.5 s", "1 s", "5 s"])
     ax[0].set_xlabel("micro-batch trigger interval"); ax[0].set_ylabel("end-to-end latency (ms), bars = p50")
-    ax[0].set_yscale("log"); ax[0].legend(fontsize=8.5, ncol=2)
+    ax[0].set_yscale("log"); ax[0].set_ylim(top=3e4); ax[0].legend(fontsize=8, ncol=3, loc="upper left")
     ax[0].set_title("Kafka → Spark → Kafka latency (synthetic replay, 1 broker per cluster)")
     thr = []
     for t in trig:
         r = [r for r in runs if r["trigger"] == t and r["target_rate"] == 0]
-        thr.append(r[0]["throughput_eps"] if r and r[0].get("throughput_eps") else 0)
+        thr.append(r[0]["throughput_eps"] if r and r[0].get("throughput_eps") and r[0]["throughput_eps"] < 20000 else 0)
     ax[1].bar(range(len(trig)), thr, color=COL["F"], edgecolor="#222", lw=0.6)
     for i, v in enumerate(thr):
-        ax[1].text(i, v, f"{v:,.0f}", ha="center", va="bottom", fontsize=9)
+        ax[1].text(i, v, f"{v:,.0f}" if v else "n/a\n(one batch)", ha="center", va="bottom", fontsize=9)
     ax[1].set_xticks(range(len(trig))); ax[1].set_xticklabels(["0.5 s", "1 s", "5 s"])
     ax[1].set_xlabel("trigger"); ax[1].set_ylabel("events / s"); ax[1].set_title("Max sustained throughput\n(local[2])")
     fig.tight_layout()
