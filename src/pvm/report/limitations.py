@@ -14,7 +14,9 @@ def add(doc, ctx):
     doc.h("5  Limitations", 1)
     doc.bullets([
         "**Record-level, not patient-level DP.** ε bounds one training row; patients contribute hundreds of correlated rows, so patient-level privacy is much weaker. Standardisation moments, class counts and threshold-tuning count tables are shared without noise.",
-        "**FL is simulated, not run over Kafka.** Sites are simulated in one process (no network, stragglers or dropouts); only inference runs over Kafka. Communication bytes for FL are computed analytically (rounds × sites × 2 × parameters × 8 B).",
+        "**FL experiments are simulated in one process.** All accuracy results use an in-process FedAvg simulation (no network, stragglers or dropouts). " + (
+            f"A separate demo (`pvm.stream.fl_kafka`) carries every parameter exchange over Kafka topics (`fl.updates`, `fl.global`) and reproduces the in-process model (max |Δθ| = {S['fl_over_kafka']['max_abs_diff_vs_in_process']:.1e}), but the rounds still execute on one machine and the experiments do not use it."
+            if S.get("fl_over_kafka") else "FL rounds are not run over Kafka."),
         "**No real attack evaluation.** We ran only a simple loss-threshold membership-inference check; it finds nothing, which does not show that stronger attacks (gradient inversion, attribute inference) fail.",
         "**Semi-synthetic labels.** Episodes are injected with hand-chosen shapes and magnitudes; absolute F1/recall are not clinical performance, and methods that model the injection well are favoured. eICU invasive SBP and temperature are mostly missing, so deteriorations are mainly visible through HR, SpO2 and RR.",
         "**Simple linear model.** A 16-parameter logistic regression is explainable but cannot capture interactions or trends; conclusions about FL/DP may not transfer to deep models.",
