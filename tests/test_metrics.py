@@ -35,3 +35,17 @@ def test_summarise_and_sample_metrics():
     out = M.summarise(dict(alarms=4, tp_alarms=3, episodes=6, detected=3, days=2.0), [10, 20, 30])
     assert out["precision"] == 0.75 and out["recall"] == 0.5
     assert out["fa_per_day"] == 0.5 and out["delay_min"] == 20.0
+
+
+def test_always_on_alarm_refires_and_is_not_a_single_event():
+    """An alarm that never clears must keep counting (1 per hour = 12 samples)."""
+    s = np.ones(288)                                   # one day at 5 min
+    c, _ = M.patient_counts(s, [], 0, 288, 5.0, 0.5, 3)
+    assert c["alarms"] == 24                           # ~24 false alarms / day
+
+
+def test_always_on_alarm_cannot_game_recall_or_precision():
+    s = np.ones(288)
+    c, d = M.patient_counts(s, [(100, 120, "x")], 0, 288, 5.0, 0.5, 3)
+    assert c["detected"] == 1 and c["alarms"] > 10      # many false alarms too
+    assert c["tp_alarms"] == 1

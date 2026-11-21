@@ -1,10 +1,13 @@
 """Alarm-level and sample-level metrics, all in real time units.
 
-An *alarm* is a run of >= m consecutive samples with score > tau.  It fires
-at the m-th sample of the run.  It is a true positive if its span overlaps an
-episode padded by ``tol_min`` minutes, otherwise a false alarm.  An episode is
-*detected* if at least one alarm overlaps it; its delay is measured from the
-episode start to the first such alarm firing (never negative).
+An *alarm event* fires when the score has been above ``tau`` for ``m``
+consecutive samples.  While the condition keeps holding the alarm re-fires every
+``refire_min`` minutes (a persistent alarm keeps sounding; an always-on alarm
+must not count as a single event).  An alarm firing inside an episode padded by
+``tol_min`` minutes is a true positive, otherwise a false alarm.  An episode is
+*detected* if at least one alarm fires in its padded window; its delay runs from
+the episode start to the first such firing (never negative).  Several alarms
+inside one already-detected episode are merged (not counted again).
 
 Counts are additive across patients and sites, so threshold tuning only ever
 needs aggregate counts (works federatedly).
@@ -17,6 +20,7 @@ import numpy as np
 from sklearn.metrics import average_precision_score, roc_auc_score
 
 ZERO_COUNTS = dict(alarms=0, tp_alarms=0, episodes=0, detected=0, days=0.0)
+REFIRE_MIN = 60.0
 
 
 def runs(flag: np.ndarray, m: int):
@@ -29,27 +33,34 @@ def runs(flag: np.ndarray, m: int):
     return list(zip(starts[keep].tolist(), ends[keep].tolist()))
 
 
-def patient_counts(score, episodes, lo, hi, dt_min, tau, m, tol_min=30.0):
-    """Counts and delays for one patient on the sample range [lo, hi)."""
+def patient_counts(score, episodes, lo, hi, dt_min, tau, m, tol_min=30.0,
+                   refire_min=REFIRE_MIN):
+    """Counts and delays for one patient on the sample range [lo, hi).
+
+    ``alarms`` = false alarms + detected episodes (merged); ``tp_alarms`` =
+    detected episodes.
+    """
     tol = int(math.ceil(tol_min / dt_min))
+    refire = max(1, int(round(refire_min / dt_min)))
     s = np.asarray(score[lo:hi], dtype=float)
     flag = np.where(np.isnan(s), False, s > tau)
-    al = runs(flag, m)
-    eps = [(a, b) for (a, b, _k) in episodes if a >= lo and b <= hi]
-    eps = [(a - lo, b - lo) for a, b in eps]
-    tp = 0
-    first_fire = {i: None for i in range(len(eps))}
-    for (a0, a1) in al:
-        fire = a0 + m - 1
+    fires = []
+    for a0, a1 in runs(flag, m):
+        fires.extend(range(a0 + m - 1, a1, refire))
+    eps = [(a - lo, b - lo) for (a, b, _k) in episodes if a >= lo and b <= hi]
+    first = [None] * len(eps)
+    fa = 0
+    for f in fires:
         hit = False
         for i, (e0, e1) in enumerate(eps):
-            if a0 < e1 + tol and a1 > e0 - tol:
+            if e0 - tol <= f < e1 + tol:
                 hit = True
-                if first_fire[i] is None or fire < first_fire[i]:
-                    first_fire[i] = fire
-        tp += int(hit)
-    delays = [max(0, f - eps[i][0]) * dt_min for i, f in first_fire.items() if f is not None]
-    c = dict(alarms=len(al), tp_alarms=tp, episodes=len(eps), detected=len(delays),
+                if first[i] is None:
+                    first[i] = f
+        fa += 0 if hit else 1
+    delays = [max(0, f - eps[i][0]) * dt_min for i, f in enumerate(first) if f is not None]
+    det = len(delays)
+    c = dict(alarms=fa + det, tp_alarms=det, episodes=len(eps), detected=det,
              days=(hi - lo) * dt_min / 1440.0)
     return c, delays
 
