@@ -41,3 +41,17 @@ def test_sites_are_non_iid():
         mixes.setdefault(p.site, Counter())[p.phenotype] += 1
     top = [m.most_common(1)[0][0] for m in mixes.values()]
     assert len(set(top)) >= 2            # sites are dominated by different phenotypes
+
+
+def test_ar1_noise_is_autocorrelated():
+    p = SY.make_patient("a", "s", "normal", 4.0, np.random.default_rng(3), episode_rate=0.0)
+    x = p.X[:, 0]
+    x = x[~np.isnan(x)]
+    x = x - np.mean(x)
+    lag1 = np.corrcoef(x[:-1], x[1:])[0, 1]
+    assert lag1 > 0.5
+
+
+def test_dt_minutes_is_parameterised():
+    p = SY.make_patient("a", "s", "normal", 1.0, np.random.default_rng(4), dt_min=1.0)
+    assert p.T == 1440 and abs(p.days - 1.0) < 1e-9
