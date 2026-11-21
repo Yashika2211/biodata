@@ -47,3 +47,19 @@ make dist          # dist/code.zip, dist/report.zip, dist/ppt.zip
   real physiology + injected, labelled deterioration episodes (no episode crosses the train/test split).
 * A **synthetic cohort generator** (6 phenotypes, non-IID sites, AR(1) noise, circadian drift, artefacts) is also provided.
 * Every table and figure is labelled with its dataset; synthetic results are never reported as public-dataset results.
+
+## Running the streaming pipeline by hand
+
+```bash
+make up                                                     # Kafka x2 + topics
+PYTHONPATH=src .venv/bin/python -m pvm.train                # exports models/model.json
+export JAVA_HOME=$(brew --prefix openjdk@17)                # Java 17
+export PYSPARK_PYTHON=$PWD/.venv-spark/bin/python PYTHONPATH=src
+.venv-spark/bin/python -m pvm.stream.spark_job --trigger "1 second" &   # add --emit-all to alert on every event
+.venv-spark/bin/python -m pvm.stream.consumer --idle 30 &               # latency percentiles
+.venv-spark/bin/python -m pvm.stream.producer --rate 500 --events 20000
+.venv-spark/bin/python -m pvm.stream.bench_kafka            # full latency/throughput sweep
+```
+
+The Spark venv needs pandas 2.2.x (PySpark 3.5 `applyInPandasWithState` breaks with pandas 3) and the
+Kafka clients must use `127.0.0.1`, not `localhost`.
