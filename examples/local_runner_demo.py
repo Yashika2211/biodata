@@ -14,7 +14,7 @@ from pvm.data.synthetic import make_patient
 
 def main(model_path="models/model.json"):
     model = ML.Model.from_json(open(model_path).read())
-    p = make_patient("demo-patient", "site0", "copd", 4.0, np.random.default_rng(3))
+    p = make_patient("demo-patient", "site0", "copd", 4.0, np.random.default_rng(4))
     runner = S.LocalRunner(model, salt="demo-salt")
     alerts = []
     batch = 12                                   # one micro-batch = 1 hour of 5-minute samples
