@@ -129,6 +129,9 @@ def build(results_dir="results"):
     if os.path.exists(p):
         lat["kafka"] = json.load(open(p))
     out["latency"] = lat
+    p = os.path.join(results_dir, "fl_kafka.json")
+    if os.path.exists(p):
+        out["fl_over_kafka"] = json.load(open(p))
     # cost: measured bytes + CPU, per dataset, from method D alarm rates
     cost = {}
     if lat.get("inprocess"):
