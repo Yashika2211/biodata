@@ -23,6 +23,7 @@ experiments:
 	$(PY) -m pvm.experiments --dataset synthetic --seeds 5
 	$(PY) -m pvm.experiments --dataset eicu --seeds 5
 	$(PY) -m pvm.bench_inprocess
+	$(PY) -m pvm.bench_fl_kafka
 	$(PY) -m pvm.summary
 
 figures:
