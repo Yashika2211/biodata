@@ -73,3 +73,7 @@ tests/              pytest (adaptive state, metrics, DP accountant, split, FedAv
 docker-compose.yml  two KRaft Kafka clusters
 results/summary.json   the single source of every number in the report and deck
 ```
+
+## Documentation
+`docs/methodology.md`, `docs/experiments.md`, `docs/data.md`, `docs/privacy.md`, `docs/streaming.md`,
+`docs/results_guide.md`, `docs/limitations.md`.
