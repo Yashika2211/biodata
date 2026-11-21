@@ -1,5 +1,7 @@
 """Central constants: vitals, population priors, ward thresholds, defaults.
 
+Units: HR bpm, SpO2 %, RR breaths/min, SBP mmHg, temperature degrees C.
+
 Everything that more than one module needs lives here so that offline
 training, evaluation, the local runner and the Spark job cannot drift apart.
 """
