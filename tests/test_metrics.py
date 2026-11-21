@@ -54,3 +54,9 @@ def test_always_on_alarm_cannot_game_recall_or_precision():
 def test_delay_is_median_over_detected_episodes():
     out = M.summarise(dict(alarms=3, tp_alarms=3, episodes=4, detected=3, days=1.0), [5.0, 50.0, 500.0])
     assert out["delay_min"] == 50.0 and out["recall"] == 0.75
+
+
+def test_episode_outside_range_is_ignored():
+    s = np.zeros(100)
+    c, _ = M.patient_counts(s, [(10, 20, "x"), (60, 70, "x")], 50, 100, 5.0, 0.5, 3)
+    assert c["episodes"] == 1          # only the episode inside [50, 100)
