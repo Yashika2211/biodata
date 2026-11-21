@@ -37,3 +37,9 @@ dist:
 
 clean:
 	rm -rf results/*.json figures/*.png dist
+
+bench-kafka:
+	$(PY) -m pvm.stream.bench_kafka
+
+local-demo:
+	$(PY) examples/local_runner_demo.py
