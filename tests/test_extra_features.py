@@ -12,3 +12,8 @@ def test_all_missing_row_keeps_time_counter_advancing():
     st = F.new_state('adaptive')
     F.update_state(st, [float('nan')] * 5)
     assert st['t'] == 1
+
+
+def test_clean_value_range_checks():
+    assert F.clean_value(1, 101) != F.clean_value(1, 101)  # NaN
+    assert F.clean_value(1, 95) == 95.0
