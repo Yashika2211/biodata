@@ -64,7 +64,7 @@ def _local_dp(theta, Xa, y, cw, steps, lr, l2, q, sigma, clip, rng):
 
 
 def fedavg(sites, cw, rounds=300, local_steps=3, lr=0.3, l2=ML.L2,
-           dp_sigma=None, clip=1.0, q=0.05, delta=1e-5, seed=0,
+           dp_sigma=None, clip=10.0, q=0.02, delta=1e-5, seed=0,
            central_loss=None, tol=1e-3, record_every=1):
     """Train by FedAvg over ``sites`` = list of (Xa_standardised_aug, y).
 
@@ -100,5 +100,6 @@ def fedavg(sites, cw, rounds=300, local_steps=3, lr=0.3, l2=ML.L2,
     # 8 bytes/float, theta down + theta up, per site, per round
     res.bytes_exchanged = int(rounds * len(sites) * 2 * d * 8)
     if dp_sigma is not None:
-        res.epsilon = max(P.epsilon(q, dp_sigma, rounds * local_steps, delta) for _ in [0])
+        # same q at every site => same epsilon at every site (so also the worst case)
+        res.epsilon = float(P.epsilon(q, dp_sigma, rounds * local_steps, delta))
     return res

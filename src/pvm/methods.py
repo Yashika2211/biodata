@@ -87,8 +87,8 @@ def prepare_global(patients, feats):
 
 
 def run_methods(patients, m=C.PERSISTENCE_M, alpha=C.ALPHA, tol_min=30.0,
-                fed_rounds=400, local_steps=3, lr=0.3, sigmas=(0.7, 1.0, 2.0, 4.0, 8.0),
-                clip=1.0, q=0.05, seed=0, which=("A", "A2", "B", "C", "D", "E", "F", "G"),
+                fed_rounds=400, local_steps=3, lr=0.3, sigmas=(0.5, 2.0, 8.0, 32.0, 128.0),
+                clip=10.0, q=0.02, dp_rounds=150, seed=0, which=("A", "A2", "B", "C", "D", "E", "F", "G"),
                 feats_cache=None):
     res, extras = {}, {}
     sites_static = by_site(patients)
@@ -170,7 +170,7 @@ def run_methods(patients, m=C.PERSISTENCE_M, alpha=C.ALPHA, tol_min=30.0,
             extras["model_F"] = model
         if "G" in which:
             for sg in sigmas:
-                g = FED.fedavg(std_list, cw, rounds=fed_rounds, local_steps=local_steps, lr=lr * 0.5,
+                g = FED.fedavg(std_list, cw, rounds=dp_rounds, local_steps=local_steps, lr=lr,
                                dp_sigma=sg, clip=clip, q=q, seed=seed + 1, central_loss=cen_loss)
                 mg = ML.Model(g.theta, mean, sd, m=m, alpha=alpha, tag=C.MODEL_TAG + "-fed-dp")
                 scg = _score_patients(mg, patients, fa)
