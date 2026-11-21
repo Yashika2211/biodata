@@ -94,9 +94,18 @@ def add(doc, ctx):
                   "The \"max\" rows are backlog bursts (producer unthrottled), so their latency reflects queueing, and CPU-s per million events is reported only there (saturated).",
                   widths=[2.6, 2.0, 1.5, 1.5, 1.5, 1.5, 2.4, 2.0], size=8)
         doc.figure("figures/fig_latency.png", "End-to-end latency by trigger interval and event rate; maximum throughput.", 16.0)
-        doc.p("Latency is dominated by the micro-batch trigger interval (a micro-batch engine waits for the trigger), "
-              "so p50 tracks the trigger rather than per-event compute, which is microseconds. For 5-minute vitals "
-              "even a 5-second trigger is negligible clinically; the shorter triggers matter only if the source rate is high.")
+        def p50(t, r):
+            x = [q for q in k["runs"] if q["trigger"] == t and q["target_rate"] == r]
+            return x[0]["latency_ms"]["p50"] / 1000 if x else float("nan")
+        doc.p(f"At 1000 events/s the p50 end-to-end latency was {p50('500 milliseconds', 1000):.1f} s (0.5 s trigger), "
+              f"{p50('1 second', 1000):.1f} s (1 s) and {p50('5 seconds', 1000):.1f} s (5 s trigger); p99 was several seconds. "
+              "Latency is the wait for the next micro-batch plus the batch's own processing time (Spark scheduling, Python worker, "
+              "state store, Kafka write); with 160 patient keys on local[2] one batch takes roughly a second, so the trigger only "
+              "matters once it exceeds that. The job saturates near 800–1000 events/s on this setup. "
+              "**Unexplained anomaly:** the slowest p50 (4–5 s) occurred at the *lowest* rate (50 events/s) for the 0.5 s and 1 s triggers, "
+              "which we did not diagnose (we suspect small-batch/idle-partition effects in the Kafka source, untested). "
+              "The \"max\" throughput figures come from the consumer's first-to-last-message span and are unreliable for the 5 s trigger "
+              "(one large batch). For 5-minute vitals, even multi-second latency is clinically negligible.")
     cost = S.get("cost") or {}
     if cost:
         cs_ = next(iter(cost.values()))

@@ -1,0 +1,10 @@
+{
+ "rounds": 100,
+ "sites": 4,
+ "parameters": 16,
+ "bytes_up_measured": 149378,
+ "bytes_down_measured": 144324,
+ "bytes_analytic_float64": 102400,
+ "seconds": 2.5018959045410156,
+ "max_abs_diff_vs_in_process": 0.0
+}
