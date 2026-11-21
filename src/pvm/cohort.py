@@ -49,7 +49,7 @@ class Patient:
 
 
 def inject_episodes(X: np.ndarray, rng: np.random.Generator, dt_min: float,
-                    rate_per_day: float = 1.2, sev_range=(0.45, 1.25)):
+                    rate_per_day: float = 0.4, sev_range=(0.45, 1.25)):
     """Inject labelled deterioration episodes into ``X`` (a copy is returned).
 
     Episodes are placed separately inside the train and test regions, so none

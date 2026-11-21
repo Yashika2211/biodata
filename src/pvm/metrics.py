@@ -20,21 +20,13 @@ ZERO_COUNTS = dict(alarms=0, tp_alarms=0, episodes=0, detected=0, days=0.0)
 
 
 def runs(flag: np.ndarray, m: int):
-    """Yield (start, end_exclusive) of runs of True with length >= m."""
-    out = []
-    n = len(flag)
-    i = 0
-    while i < n:
-        if flag[i]:
-            j = i
-            while j < n and flag[j]:
-                j += 1
-            if j - i >= m:
-                out.append((i, j))
-            i = j
-        else:
-            i += 1
-    return out
+    """Return [(start, end_exclusive)] of runs of True with length >= m."""
+    f = np.concatenate(([0], np.asarray(flag, dtype=np.int8), [0]))
+    d = np.diff(f)
+    starts = np.flatnonzero(d == 1)
+    ends = np.flatnonzero(d == -1)
+    keep = (ends - starts) >= m
+    return list(zip(starts[keep].tolist(), ends[keep].tolist()))
 
 
 def patient_counts(score, episodes, lo, hi, dt_min, tau, m, tol_min=30.0):
