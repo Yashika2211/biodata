@@ -39,3 +39,11 @@ make dist          # dist/code.zip, dist/report.zip, dist/ppt.zip
 | E | local-only training per site |
 | F | **federated (FedAvg)** on adaptive features |
 | G | F + differential privacy (per-record clipping, Gaussian noise, Rényi accountant, δ = 1e-5; **record-level** ε) |
+
+## Data and honesty
+
+* **Public dataset:** eICU-CRD demo `vitalPeriodic` (5-minute sampling). See `data/README.md`.
+* The public data has **no ground-truth anomaly labels**, so the study uses a **semi-synthetic protocol**:
+  real physiology + injected, labelled deterioration episodes (no episode crosses the train/test split).
+* A **synthetic cohort generator** (6 phenotypes, non-IID sites, AR(1) noise, circadian drift, artefacts) is also provided.
+* Every table and figure is labelled with its dataset; synthetic results are never reported as public-dataset results.
