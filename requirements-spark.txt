@@ -1,0 +1,6 @@
+# Streaming stack (Kafka + Spark Structured Streaming). Needs Java 17.
+pyspark==3.5.3
+pyarrow>=14
+pandas>=2.1
+numpy>=1.26
+kafka-python>=2.0.2
