@@ -66,8 +66,8 @@ def plot_adaptive_example(p, title, fname, tau_z=3.5, thr=92.0, j=1):
 
 
 def fig_adaptive_examples():
-    from .data import public as PB
-    from .data import synthetic as SY
+    from ..data import public as PB
+    from ..data import synthetic as SY
     out = {}
     rng = np.random.default_rng(5)
     best = None
@@ -89,7 +89,7 @@ def fig_adaptive_examples():
         for seed in range(30):
             r = np.random.default_rng(seed)
             sid, h, X = cand[seed % len(cand)]
-            from .cohort import Patient, inject_episodes
+            from ..cohort import Patient, inject_episodes
             Xi, y, ep, eps = inject_episodes(X, r, 5.0)
             if any(k in ("hypoxia", "shock", "sepsis") and s >= int(0.6 * len(X)) for s, e, k in eps):
                 p = Patient(f"eicu-{sid}", "site0", Xi, y, ep, eps, 5.0)
