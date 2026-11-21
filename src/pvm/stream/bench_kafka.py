@@ -72,7 +72,7 @@ def main():
     from ..experiments import Provider
     ap = argparse.ArgumentParser()
     ap.add_argument("--triggers", nargs="+", default=["500 milliseconds", "1 second", "5 seconds"])
-    ap.add_argument("--rates", nargs="+", type=float, default=[50, 500, 2000])
+    ap.add_argument("--rates", nargs="+", type=float, default=[50, 250, 1000])
     ap.add_argument("--seconds", type=float, default=20.0, help="duration of each paced run")
     ap.add_argument("--max-events", type=int, default=40000)
     ap.add_argument("--cores", type=int, default=2)
