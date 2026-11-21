@@ -5,3 +5,4 @@
 * **FedAvg** federated averaging of site model updates weighted by record count.
 * **DP-SGD** SGD with per-record clipping and Gaussian noise.
 * **RDP** Renyi differential privacy accountant.
+* **Alarm event** persistence-satisfying firing that re-fires hourly while it persists.
