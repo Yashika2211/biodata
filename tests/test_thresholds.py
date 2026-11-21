@@ -24,4 +24,4 @@ def test_good_scorer_gets_a_sensible_threshold():
     ps = make_cohort(24, 3, seed=2, days=3.0)
     sc = _scores(ps, noise=0.3)
     tau, f1 = T.tune([ps], sc, T.LOGIT_GRID, 3)
-    assert 0.5 < tau < 3.0 and f1 > 0.5
+    assert 0.5 < tau <= 3.0 and f1 > 0.9      # plateau of ties -> conservative edge
