@@ -5,3 +5,5 @@
 [synthetic] seed 4 main done in 22s
 [synthetic] seed 0 ablations done
 [synthetic] seed 1 ablations done
+[synthetic] seed 2 ablations done
+saved synthetic 562s
