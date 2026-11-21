@@ -81,3 +81,16 @@ def test_current_z_uses_state_before_update():
         F.update_state(st, [80, 97, 16, 120, 36.8])
     z = F.update_state(st, [140, 97, 16, 120, 36.8])[0]
     assert z > 5            # the outlier is judged against the old baseline
+
+
+def test_slower_learning_while_abnormal():
+    a, b = F.new_state("adaptive"), F.new_state("adaptive")
+    for _ in range(150):
+        F.update_state(a, [80, 97, 16, 120, 36.8]); F.update_state(b, [80, 97, 16, 120, 36.8])
+    shift = [80, 97 - 6, 16, 120, 36.8]       # abnormal (large |z|)
+    mild = [80, 97 - 1.0, 16, 120, 36.8]      # normal range
+    for _ in range(20):
+        F.update_state(a, shift); F.update_state(b, mild)
+    moved_a, moved_b = 97 - a["mu"][1], 97 - b["mu"][1]
+    # the abnormal shift is 6x larger but moves the baseline much less than 6x as far
+    assert moved_a < 6 * moved_b
