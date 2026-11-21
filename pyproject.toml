@@ -1,0 +1,13 @@
+[project]
+name = "pvm"
+version = "0.1.0"
+description = "Privacy-preserving patient vitals monitoring: Kafka + Spark Streaming study"
+requires-python = ">=3.10"
+dependencies = ["numpy", "scipy", "pandas", "scikit-learn", "matplotlib"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
