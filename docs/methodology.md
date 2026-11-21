@@ -26,3 +26,9 @@ detected episode are merged. Delay = first firing minus episode start (never neg
 
 This definition replaced an earlier "span overlaps an episode" rule after we noticed an always-on alarm achieved
 recall 1.0 and F1 ~0.6 with it — a perfect-looking score that was a metric loophole (see `tests/test_metrics.py`).
+
+## Threshold tuning from aggregate counts
+Each site evaluates a fixed grid of thresholds on its own training region and shares only
+`(alarms, true-positive alarms, episodes, detected, patient-days)` per threshold. The coordinator sums the tables and
+picks the F1-maximising threshold (ties go to the more conservative one). `tests/test_thresholds.py` checks this equals
+pooled tuning.
