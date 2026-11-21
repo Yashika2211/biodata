@@ -91,7 +91,13 @@ class Model:
 
     def score(self, X):
         """Logit score for raw (unstandardised) features, shape (N, 15)."""
-        return ((np.asarray(X) - self.mean) / self.sd) @ self.theta[:-1] + self.theta[-1]
+        # Sequential accumulation in feature order => bit-identical to
+        # ``score_one`` (BLAS matmul would change the summation order).
+        X = np.asarray(X, dtype=float)
+        z = np.full(len(X), float(self.theta[-1]))
+        for j in range(X.shape[1]):
+            z = z + ((X[:, j] - self.mean[j]) / self.sd[j]) * self.theta[j]
+        return z
 
     def score_one(self, f):
         """Pure-python score of one feature vector (used by serving)."""
