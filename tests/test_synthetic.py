@@ -31,3 +31,13 @@ def test_artefact_runs_have_realistic_lengths():
                 lens.append(run); run = 0
     assert max(lens) <= 8 * 3            # overlapping artefacts can merge, but stay short
     assert np.mean(np.array(lens) >= 3) > 0.3   # many survive a 3-sample persistence filter
+
+
+def test_sites_are_non_iid():
+    ps = SY.make_cohort(80, 4, seed=7)
+    from collections import Counter
+    mixes = {}
+    for p in ps:
+        mixes.setdefault(p.site, Counter())[p.phenotype] += 1
+    top = [m.most_common(1)[0][0] for m in mixes.values()]
+    assert len(set(top)) >= 2            # sites are dominated by different phenotypes
