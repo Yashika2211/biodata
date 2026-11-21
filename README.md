@@ -63,3 +63,13 @@ export PYSPARK_PYTHON=$PWD/.venv-spark/bin/python PYTHONPATH=src
 
 The Spark venv needs pandas 2.2.x (PySpark 3.5 `applyInPandasWithState` breaks with pandas 3) and the
 Kafka clients must use `127.0.0.1`, not `localhost`.
+
+## Layout
+
+```
+src/pvm/            features, serving, models, federated, privacy, metrics, methods, experiments, summary, figures, docs
+src/pvm/stream/     producer, consumer, spark_job, bench_kafka
+tests/              pytest (adaptive state, metrics, DP accountant, split, FedAvg, serving == offline, loader)
+docker-compose.yml  two KRaft Kafka clusters
+results/summary.json   the single source of every number in the report and deck
+```
