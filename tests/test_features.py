@@ -94,3 +94,11 @@ def test_slower_learning_while_abnormal():
     moved_a, moved_b = 97 - a["mu"][1], 97 - b["mu"][1]
     # the abnormal shift is 6x larger but moves the baseline much less than 6x as far
     assert moved_a < 6 * moved_b
+
+
+def test_min_scale_floor_prevents_exploding_z():
+    st = F.new_state("adaptive")
+    for _ in range(400):
+        F.update_state(st, [80, 97, 16, 120, 36.8])         # zero-variance signal
+    z = F.update_state(st, [80, 95, 16, 120, 36.8])[1]
+    assert abs(z) <= 2.0 / C.MIN_SCALE["spo2"] + 1e-9
