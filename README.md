@@ -27,3 +27,15 @@ make dist          # dist/code.zip, dist/report.zip, dist/ppt.zip
   `applyInPandasWithState` (state serialised as JSON) and scores each event with the same code
   used offline (`src/pvm/features.py`, `src/pvm/serving.py`).
 * A consumer on the central cluster measures end-to-end latency (p50/p95/p99).
+
+## Methods compared (held-out = last 40 % of every patient's series)
+
+| | Method |
+|---|---|
+| A / A2 | static ward thresholds (instant / persistence m = 3) |
+| B | centralised ML, features normalised with fixed population priors |
+| C | per-patient adaptive threshold, no learning |
+| D | centralised ML on adaptive features |
+| E | local-only training per site |
+| F | **federated (FedAvg)** on adaptive features |
+| G | F + differential privacy (per-record clipping, Gaussian noise, Rényi accountant, δ = 1e-5; **record-level** ε) |
