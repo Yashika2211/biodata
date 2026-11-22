@@ -2,7 +2,7 @@
 # One-command live demo: starts Kafka, runs Spark, replays vitals, prints the alerts that reach the central cluster.
 set -euo pipefail
 cd "$(dirname "$0")/.."
-export JAVA_HOME="${JAVA_HOME:-$(brew --prefix openjdk@17)}" PATH="$JAVA_HOME/bin:$PATH"
+JAVA_HOME="${JAVA_HOME:-$(brew --prefix openjdk@17)}"; export JAVA_HOME PATH="$JAVA_HOME/bin:$PATH"
 export PYSPARK_PYTHON="$PWD/.venv-spark/bin/python" PYTHONPATH=src
 PY=.venv-spark/bin/python
 
